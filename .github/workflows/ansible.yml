@@ -15,14 +15,14 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Lint and Molecule
         run: |
           pip3 install --upgrade pip wheel && \
           pip3 install --upgrade cryptography cffi && \
-          pip3 install ansible-core==2.13.2 && \
+          pip3 install ansible-core==2.16.2 && \
           pip3 install ansible==6.1.0 ansible-lint==6.3.0 yamllint && \
           pip3 install molecule molecule-containers molecule-docker molecule-podman molecule-ec2
 
