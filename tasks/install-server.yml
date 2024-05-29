@@ -24,19 +24,19 @@
   when: minio_config_dir | length > 0
 
 - name: Create MinIO group
-  group:
+  ansible.builtin.group:
     name: "{{ minio_group }}"
     state: present
 
 - name: Create MinIO user
-  user:
+  ansible.builtin.user:
     name: "{{ minio_user }}"
     group: "{{ minio_group }}"
     system: "yes"
     shell: "/usr/sbin/nologin"
 
 - name: Create the MinIO data storage directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ minio_user }}"
@@ -60,7 +60,7 @@
   notify: restart minio
 
 - name: Generate the MinIO server envfile
-  template:
+  ansible.builtin.template:
     src: minio.env.j2
     dest: "{{ minio_server_envfile }}"
     owner: "{{ minio_user }}"
@@ -69,7 +69,7 @@
   notify: restart minio
 
 - name: Create the MinIO server systemd config
-  template:
+  ansible.builtin.template:
     src: minio.service.j2
     dest: "/etc/systemd/system/minio.service"
     owner: "{{ minio_user }}"
@@ -81,7 +81,7 @@
     - restart minio
 
 - name: Create the MinIO server init.d config
-  template:
+  ansible.builtin.template:
     src: minio.init.j2
     dest: "/etc/init.d/minio"
     owner: "{{ minio_user }}"
@@ -91,7 +91,7 @@
   notify: restart minio
 
 - name: Create the MinIO config dir
-  file:
+  ansible.builtin.file:
     path: "{{ minio_config_dir }}"
     owner: "{{ minio_user }}"
     group: "{{ minio_group }}"
@@ -100,7 +100,7 @@
   when: minio_config_dir is defined
 
 - name: Enable and start the MinIO service
-  service:
+  ansible.builtin.service:
     name: minio
     enabled: true
     state: started
