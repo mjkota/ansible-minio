@@ -34,7 +34,9 @@ jobs:
           pip3 install ansible==6.1.0 ansible-lint==6.3.0 yamllint
           pip3 install molecule molecule-containers molecule-docker molecule-podman molecule-ec2
       - name: Lint and Molecule
+        env:
+          ANSIBLE_LINT_PROJECT_DIR: ${{ github.workspace }}
         run: |
           yamllint . -c .yamllint
-          ansible-lint -x fqcn-builtins,var-spacing -c .ansible-lint --project-dir=$(pwd)
+          ansible-lint -x fqcn-builtins,var-spacing -c .ansible-lint
           molecule test -s default
