@@ -31,6 +31,6 @@ jobs:
           pip3 install molecule molecule-containers molecule-docker molecule-podman molecule-ec2
 
           yamllint . -c .yamllint
-          ansible-lint -x fqcn-builtins,var-spacing -c .ansible-lint
+          ansible-lint -x fqcn-builtins,var-spacing -c .ansible-lint --project-dir=$(pwd)
 
           molecule test -s default
