@@ -25,8 +25,15 @@ jobs:
           pip3 install ansible-core==2.16.2 && \
           pip3 install ansible==6.1.0 ansible-lint==6.16.0 yamllint && \
           pip3 install molecule molecule-containers molecule-docker molecule-podman molecule-ec2 \
-
+      - name: Clean up Docker
+        run: |
+          docker system prune -f
+          docker volume prune -f
+          docker network prune -f
+      
+      - name: Lint and Molecule
+        run: |
           yamllint . -c .yamllint
           ansible-lint -x fqcn-builtins,var-spacing -c .ansible-lint
 
-          molecule test -s default
+          molecule test -s default -v
