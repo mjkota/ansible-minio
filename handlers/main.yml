@@ -1,12 +1,12 @@
 ---
 # handlers file for minio
 
-- name: reload minio systemd
+- name: Reload Minio Systemd
   systemd:
     name: minio
     daemon_reload: True
 
-- name: restart minio
+- name: Restart Minio
   service:
     name: minio
     state: restarted
