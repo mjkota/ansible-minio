@@ -1,21 +1,21 @@
 ---
 
 - name: Compose The MinIO client Download Base Url
-  set_fact:
+  ansible.builtin.set_fact:
     _minio_client_download_base_url: "https://dl.minio.io/client/mc/release/linux-{{ go_arch }}"
 
 - name: Compose The MinIO Client Download Url With Lastest Release
-  set_fact:
+  ansible.builtin.set_fact:
     _minio_client_download_url: "{{ _minio_client_download_base_url }}/mc"
   when: minio_client_release | length == 0
 
 - name: "Compose the MinIO Client Download Url With Lastest Release {{ minio_client_release }}"
-  set_fact:
+  ansible.builtin.set_fact:
     _minio_client_download_url: "{{ _minio_client_download_base_url }}/archive/mc.{{ minio_client_release }}"
   when: minio_client_release | length > 0
 
 - name: Download The MinIO client
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ _minio_client_download_url }}"
     dest: "{{ minio_client_bin }}"
     owner: "{{ minio_user }}"
