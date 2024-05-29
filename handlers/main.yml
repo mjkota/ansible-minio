@@ -2,18 +2,18 @@
 # handlers file for minio
 
 - name: Reload Minio Systemd
-  systemd:
+  ansible.builtin.systemd:
     name: minio
     daemon_reload: True
 
 - name: Restart Minio
-  service:
+  ansible.builtin.service:
     name: minio
     state: restarted
   notify: Check MinIO WebUI
 
 - name: Check MinIO WebUI
-  uri:
+  ansible.builtin.uri:
     url: "{{ minio_connection_type }}://{{ minio_hostname }}:{{ minio_server_port }}/minio/login"
     status_code: 200
     headers:
