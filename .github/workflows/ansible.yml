@@ -36,4 +36,4 @@ jobs:
           yamllint . -c .yamllint
           ansible-lint -x fqcn-builtins,var-spacing -c .ansible-lint
 
-          molecule test -s default -v
+          molecule test -s default
